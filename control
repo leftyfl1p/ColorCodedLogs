@@ -1,0 +1,10 @@
+Package: com.leftyfl1p.elite
+Name: Elite
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: leftyfl1p
+Author: leftyfl1p
+Section: Tweaks
+Depiction: https://leftyfl1p.github.io/depictions/?p=com.leftyfl1p.elite
