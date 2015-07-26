@@ -1,7 +1,7 @@
-Package: com.leftyfl1p.elite
+Package: org.thebigboss.elite
 Name: Elite
 Depends: mobilesubstrate
-Version: 0.0.1
+Version: 1.1
 Architecture: iphoneos-arm
 Description: An awesome MobileSubstrate tweak!
 Maintainer: leftyfl1p
