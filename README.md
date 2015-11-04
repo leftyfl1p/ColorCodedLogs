@@ -1,5 +1,14 @@
-# Elite
-update of the tweak "prime" for iOS 7 and 8+
-Name comes from [here](http://www.thesaurus.com/browse/prime). Couldn't think of anything and was too lazy to change.
+# ColorCodedLogs
+Tweak to color-code iphone recents call logs based on what kind of call it was.
+- Red = missed
+- Blue = incoming and answered
+- Green = outgoing
+Compatible with iOS 7-9
 
-Open source so if I get murked someone else can update this and it will be k.
+## Preview Image
+![Preview](http://imgur.com/4XhHpkf.png)
+
+
+
+## To-do
+- Add settings panel for custom colors
