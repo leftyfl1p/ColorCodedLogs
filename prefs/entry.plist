@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = ColorCodedLogs;
+	cell = PSLinkCell;
+	detail = ColorCodedLogsListController;
+	icon = ColorCodedLogs.png;
+	isController = 1;
+	label = ColorCodedLogs;
+    };
+}
