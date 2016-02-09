@@ -5,22 +5,27 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Email me if you want to give me an icon to use for outer pane. Toggling "Enabled" requires Phone.app restart.</string>
 		</dict>
 
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<false/>
+			<true/>
 			<key>defaults</key>
 			<string>org.thebigboss.elite</string>
 			<key>key</key>
 			<string>enabled</string>
 			<key>label</key>
 			<string>Enabled</string>
+            <key>PostNotification</key>
+            <string>org.thebigboss.elite/settingsChanged</string>
 		</dict>
+
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+        </dict>
 
 		<dict>
             <key>cell</key>
@@ -86,6 +91,20 @@
             </dict>
             <key>label</key>
             <string>Missed Call Color</string>
+        </dict>
+
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+        </dict>
+
+        <dict>
+            <key>cell</key>
+            <string>PSButtonCell</string>
+            <key>label</key>
+            <string>Reset Colors To Defaults</string>
+            <key>action</key>
+            <string>resetColors</string>
         </dict>
 
 	</array>
