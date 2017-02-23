@@ -1,7 +1,10 @@
 #import <UIKit/UIKit.h>
 #import <libcolorpicker.h>
 
-#define isiOS8Up (kCFCoreFoundationVersionNumber >= 1129.15)
+#define isiOS7 (kCFCoreFoundationVersionNumber > 793.00 && kCFCoreFoundationVersionNumber < 1129.15)
+#define isiOS89 (kCFCoreFoundationVersionNumber >= 1129.15 && kCFCoreFoundationVersionNumber < 1333.2)
+#define isiOS10Up (kCFCoreFoundationVersionNumber >= 1333.2)
+
 #define prefPath @"/User/Library/Preferences/org.thebigboss.elite.plist"
 
 @interface CHRecentCall : NSObject
@@ -22,11 +25,17 @@
 -(void)tableView:(UITableView*)arg1 willDisplayCell:(PHRecentsCell*)arg2 forRowAtIndexPath:(NSIndexPath*)arg3;
 @end
 
-static NSMutableDictionary *prefs  = nil;
+//iOS 10
+@interface MPRecentsTableViewCell : UITableViewCell
+-(UILabel *)callerNameLabel;
+-(CHRecentCall *)call;
+@end
+
+static NSMutableDictionary *prefs   = nil;
 static BOOL kEnabled = YES;
-static NSString *kIncomingCallColor = nil;//[UIColor colorWithRed:36.0/255.0 green:87.0/255.0 blue:156.0/255.0 alpha:1];
-static NSString *kOutgoingCallColor = nil;//[UIColor colorWithRed:0.0/255.0 green:125.0/255.0 blue:0.0/255.0 alpha:1];
-static NSString *kMissedCallColor   = nil;//[UIColor colorWithRed:218.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
+static NSString *kIncomingCallColor = nil; // [UIColor colorWithRed:36.0/255.0 green:87.0/255.0 blue:156.0/255.0 alpha:1];
+static NSString *kOutgoingCallColor = nil; // [UIColor colorWithRed:0.0/255.0 green:125.0/255.0 blue:0.0/255.0 alpha:1];
+static NSString *kMissedCallColor   = nil; // [UIColor colorWithRed:218.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1];
 
 static void loadPrefs()
 {
@@ -71,7 +80,7 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 %end
 
 
-%group iOS8
+%group iOS89
 
 %hook PHRecentsViewController
 -(void)tableView:(UITableView*)arg1 willDisplayCell:(PHRecentsCell*)arg2 forRowAtIndexPath:(NSIndexPath*)arg3 {
@@ -102,13 +111,45 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 
 %end
 
+%group iOS10
+
+%hook MPRecentsTableViewController
+
+-(id)tableView:(id)arg1 cellForRowAtIndexPath:(id)arg2 {
+	MPRecentsTableViewCell *orig = %orig;
+	
+	if(kEnabled) {
+
+		UILabel *nameLabel = [orig callerNameLabel];
+		CHRecentCall *callInfo = [orig call];
+
+		//incoming call : 1
+		//answered elsewhere (another device) : 4
+		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
+			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, @"#24579c")];
+		} else
+
+		//outgoing call : 2
+		//outgoing but cancelled : 16
+		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
+			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, @"#007D00")];
+		} else {
+			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
+		}
+	}
+
+	return orig;
+}
+
+%end
+
+%end //iOS 10
+
 
 %ctor {
-	if (isiOS8Up) {
-		%init(iOS8);
-	} else {
-		%init(iOS7);
-	}
+	if(isiOS7) %init(iOS7);
+	if(isiOS89) %init(iOS89);
+	if(isiOS10Up) %init(iOS10);
 
 	CFNotificationCenterAddObserver(
 		CFNotificationCenterGetDarwinNotifyCenter(),

@@ -36,7 +36,9 @@
 
 - (void)loadView {
     [super loadView];
-    [UISwitch appearanceWhenContainedIn:self.class, nil].onTintColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1]; /*#007aff*/
+    //[UISwitch appearanceWhenContainedInInstancesOfClasses:self.class].onTintColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1]; /*#007aff*/ //broken ios 10
+
+    // [UISwitch appearanceWhenContainedIn:self.class, nil].onTintColor = [UIColor colorWithRed:0 green:0.478 blue:1 alpha:1]; /*#007aff*/ //older
 }
 
 //reset libcolorpicker values to defaults and update their cells
