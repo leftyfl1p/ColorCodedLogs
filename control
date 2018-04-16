@@ -1,7 +1,7 @@
 Package: org.thebigboss.elite
 Name: ColorCodedLogs
 Depends: mobilesubstrate, org.thebigboss.libcolorpicker
-Version: 1.4
+Version: 1.5
 Architecture: iphoneos-arm
 Description: An awesome MobileSubstrate tweak!
 Maintainer: leftyfl1p <leftyfl1p@icloud.com>

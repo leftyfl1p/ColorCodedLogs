@@ -5,7 +5,7 @@ Color-code recent calls log based on call type.
 - Blue = incoming and answered
 - Green = outgoing
 
-Compatible with iOS 7-9
+Compatible with iOS 7-11
 
 ## Preview Image
 ![Preview](http://imgur.com/4XhHpkf.png)

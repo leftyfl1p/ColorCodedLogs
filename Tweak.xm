@@ -1,9 +1,15 @@
 #import <UIKit/UIKit.h>
 #import <libcolorpicker.h>
+#import <version.h>
 
 #define isiOS7 (kCFCoreFoundationVersionNumber > 793.00 && kCFCoreFoundationVersionNumber < 1129.15)
 #define isiOS89 (kCFCoreFoundationVersionNumber >= 1129.15 && kCFCoreFoundationVersionNumber < 1333.2)
-#define isiOS10Up (kCFCoreFoundationVersionNumber >= 1333.2)
+
+#ifndef kCFCoreFoundationVersionNumber_iOS_10_3_3
+#define kCFCoreFoundationVersionNumber_iOS_10_3_3 1349.7
+#endif
+
+#define IS_IOS_10 IS_IOS_BETWEEN(iOS_10_0, iOS_10_3_3)
 
 #define prefPath @"/User/Library/Preferences/org.thebigboss.elite.plist"
 
@@ -28,7 +34,12 @@
 //iOS 10
 @interface MPRecentsTableViewCell : UITableViewCell
 -(UILabel *)callerNameLabel;
+-(UILabel *)callerCountLabel;
 -(CHRecentCall *)call;
+@end
+
+@interface MPRecentsTableViewController
+-(CHRecentCall *)recentCallAtTableViewIndex:(NSInteger)index; // iOS 11
 @end
 
 static NSMutableDictionary *prefs   = nil;
@@ -90,7 +101,7 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 
 		UILabel *nameLabel = MSHookIvar<UILabel *>(arg2, "_callerNameLabel");
 		CHRecentCall *callInfo = MSHookIvar<CHRecentCall *>(arg2, "_call");
-		
+
 		//incoming call : 1
 		//answered elsewhere (another device) : 4
 		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
@@ -145,11 +156,46 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 
 %end //iOS 10
 
+%group iOS11
+
+%hook MPRecentsTableViewController
+
+-(id)tableView:(id)arg1 cellForRowAtIndexPath:(NSIndexPath *)arg2 {
+	MPRecentsTableViewCell *orig = %orig;
+
+	if(kEnabled) {
+
+		UILabel *nameLabel = [orig callerNameLabel];
+		CHRecentCall *callInfo = [self recentCallAtTableViewIndex:arg2.row];
+
+		//incoming call : 1
+		//answered elsewhere (another device) : 4
+		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
+			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, @"#24579c")];
+		} else
+
+		//outgoing call : 2
+		//outgoing but cancelled : 16
+		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
+			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, @"#007D00")];
+		} else {
+			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
+		}
+	}
+
+	return orig;
+}
+
+%end
+
+%end //iOS 11
+
 
 %ctor {
 	if(isiOS7) %init(iOS7);
 	if(isiOS89) %init(iOS89);
-	if(isiOS10Up) %init(iOS10);
+	if(IS_IOS_10) %init(iOS10);
+	if(IS_IOS_OR_NEWER(iOS_11_0)) %init(iOS11);
 
 	CFNotificationCenterAddObserver(
 		CFNotificationCenterGetDarwinNotifyCenter(),
