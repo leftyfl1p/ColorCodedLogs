@@ -7,3 +7,5 @@ Description: Color-coded recent MobilePhone.app logs. Supports iOS 7-13
 Maintainer: leftyfl1p <leftyfl1p@icloud.com>
 Author: leftyfl1p <leftyfl1p@icloud.com>
 Section: Tweaks
+Icon: https://leftyfl1p.github.io/sileo-icon/org.thebigboss.elite.png
+SileoDepiction: https://leftyfl1p.github.io/sileo-depiction/org.thebigboss.elite.json
