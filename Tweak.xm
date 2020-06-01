@@ -23,6 +23,10 @@
 
 #define prefPath @"/User/Library/Preferences/org.thebigboss.elite.plist"
 
+#define defaultIncomingColor @"#24579c"
+#define defaultOutgoingColor @"#007D00"
+#define defaultMissedColor @"#DA0000"
+
 @interface CHRecentCall : NSObject
 @property unsigned int callStatus;
 @end
@@ -98,11 +102,11 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		PHRecentCall *callInfo = MSHookIvar<PHRecentCall *>(arg2, "_call");
 
 		if (callInfo.type == 1 || callInfo.type == 4) {
-			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, @"#24579c")];
+			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 		} else 
 
 		if (callInfo.type == 2 || callInfo.type == 16) {
-			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, @"#007D00")];
+			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
 			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
 		}
@@ -129,15 +133,15 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		//incoming call : 1
 		//answered elsewhere (another device) : 4
 		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
-			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, @"#24579c")];
+			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 		} else
 
 		//outgoing call : 2
 		//outgoing but cancelled : 16
 		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
-			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, @"#007D00")];
+			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
-			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
+			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 		}
 	}
 }
@@ -161,15 +165,15 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		//incoming call : 1
 		//answered elsewhere (another device) : 4
 		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
-			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, @"#24579c")];
+			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 		} else
 
 		//outgoing call : 2
 		//outgoing but cancelled : 16
 		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
-			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, @"#007D00")];
+			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
-			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
+			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 		}
 	}
 
@@ -195,15 +199,15 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		//incoming call : 1
 		//answered elsewhere (another device) : 4
 		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
-			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, @"#24579c")];
+			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 		} else
 
 		//outgoing call : 2
 		//outgoing but cancelled : 16
 		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
-			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, @"#007D00")];
+			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
-			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
+			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 		}
 	}
 
@@ -229,15 +233,15 @@ static void receivedNotification(CFNotificationCenterRef center, void *observer,
 		//incoming call : 1
 		//answered elsewhere (another device) : 4
 		if (callInfo.callStatus == 1 || callInfo.callStatus == 4) {
-			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, @"#24579c")];
+			[nameLabel setTextColor:LCPParseColorString(kIncomingCallColor, defaultIncomingColor)];
 		} else
 
 		//outgoing call : 2
 		//outgoing but cancelled : 16
 		if (callInfo.callStatus == 2 || callInfo.callStatus == 16) {
-			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, @"#007D00")];
+			[nameLabel setTextColor:LCPParseColorString(kOutgoingCallColor, defaultOutgoingColor)];
 		} else {
-			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, @"#DA0000")];
+			[nameLabel setTextColor:LCPParseColorString(kMissedCallColor, defaultMissedColor)];
 		}
 	}
 
